@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const usuariosRoutes = require('./src/routes/usuarios')
+const usuariosRoutes = require('./src/routes/usuarios');
+const restaurantesRoutes = require('./src/routes/restaurantes');
 
 
 //settings
@@ -19,7 +20,7 @@ app.get('/',(req,res)=>{
     res.render('index.html')
 })
 app.use('/api',usuariosRoutes)
-
+app.use('/api',restaurantesRoutes)
 
 //start server
 app.listen(app.get('port'), ()=>{
