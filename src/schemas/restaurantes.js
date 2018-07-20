@@ -8,6 +8,7 @@ const restaurante_schema = new Schema({
     telefono: {type: String, required: true},
     eslogan: {type: String, required: true},
     informacion: {type: String, required: true},
+    tipo: Array,
     calExp: {type: Number, min: 0, max: 5},
     numCalExp: Number,
     sumCalExp: Number,

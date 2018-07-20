@@ -7,6 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>hello world</h1>
+    <form action="api/restaurantes" method="POST" enctype="multipart/form-data">
+    <input type="text" name="name"><br>
+    <input type="text" name="direccion"><br>
+    <input type="text" name="telefono"><br>
+    <input type="text" name="eslogan"><br>
+    <input type="text" name="informacion"><br>
+    <input type="file" name="image"><br>
+    <input type="submit" value="Enviar">
+    </form>
 </body>
 </html>

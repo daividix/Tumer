@@ -1,5 +1,24 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
+const multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+   
+var upload = multer({ storage: storage })
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name: 'daividix',
+    api_key: '311686583283326',
+    api_secret: 'yAkWPDF_wV4chDnzaKbS2r1b4NU'
+})
+  
 const Restaurante = require('../schemas/restaurantes').Restaurante
 mongoose.connect('mongodb://localhost/tumer')
 
@@ -17,12 +36,17 @@ router.get('/restaurantes/:id', (req,res,next) =>{
     });
 });
 
-router.post('/restaurantes',(req,res,next) =>{
+router.post('/restaurantes', upload.single('image'), (req,res,next) =>{
     const restaurante = new Restaurante(req.body)
-    restaurante.save((err,restaurante)=>{
-        if (err) return next(err);
-        res.json(restaurante)
-    })
+    cloudinary.uploader.upload(req.file.path, function(result) {
+        restaurante.imagenes.push(result.secure_url)
+        restaurante.save((err,restaurante)=>{
+            if (err) return next(err);
+            res.json(restaurante)    
+        })
+      });
+    
+    
 })
 router.delete('/restaurantes/:id', (req,res,next) =>{
     Restaurante.remove({_id: req.params.id}, (err,result)=>{
