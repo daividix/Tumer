@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const usuariosRoutes = require('./src/routes/usuarios');
 const restaurantesRoutes = require('./src/routes/restaurantes');
+const comentariosRoutes = require('./src/routes/comentarios');
 
 
 //settings
@@ -21,6 +22,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/api',usuariosRoutes)
 app.use('/api',restaurantesRoutes)
+app.use('/api',comentariosRoutes)
 
 //start server
 app.listen(app.get('port'), ()=>{
