@@ -3,49 +3,59 @@ const mongoose = require('mongoose')
 const User = require('../schemas/usuarios').User
 mongoose.connect('mongodb://localhost/tumer')
 
-router.get('/usuarios', (req,res,next) =>{
-    User.find({},(err,usuarios) =>{
-        if (err) return next(err);
-        res.json(usuarios);
-    });
-});
 
-router.get('/usuarios/:id', (req,res,next) =>{
+router.get('/usuario/:id', (req,res,next) =>{
     User.findById(req.params.id,(err,usuario) =>{
         if (err) return next(err);
+        usuario.password = undefined
         res.json(usuario);
     });
 });
 
-router.post('/usuarios',(req,res,next) =>{
+router.post('/usuario',(req,res,next) =>{
     const usuario = new User(req.body)
+    if (!usuario.name &&
+        !usuario.username &&
+        !usuario.email &&
+        !usuario.password) {
+        return res.status(400).json({
+            error: "Faltan datos requeridos"
+        })
+    }
     usuario.save((err,usuario)=>{
         if (err) return next(err);
         res.json(usuario)
     })
 })
-router.delete('/usuarios/:id', (req,res,next) =>{
+router.delete('/usuario/:id', (req,res,next) =>{
     User.remove({_id: req.params.id}, (err,result)=>{
         if (err) return next(err);
         res.json(result)
     });
 });
 
-router.put('/usuarios/:id', (req,res,next) =>{
-    const usuario = req.body
-    const updateUsuario = {}
+router.put('/usuario/:id', (req,res,next) =>{
+    const updateUsuario = req.body
 
-    if (usuario.name) {
-        updateUsuario.name = usuario.name;
+    if (!updateUsuario.name) {
+        res.status(400).json({
+            error: "Faltan datos requeridos"
+        })
     }
-    if (usuario.username) {
-        updateUsuario.username = usuario.username;
+    if (!updateUsuario.username) {
+        res.status(400).json({
+            error: "Faltan datos requeridos"
+        })
     }
-    if (usuario.email) {
-        updateUsuario.email = usuario.email;
+    if (!updateUsuario.email) {
+        res.status(400).json({
+            error: "Faltan datos requeridos"
+        })
     }
-    if (usuario.password) {
-        updateUsuario.password = usuario.password
+    if (!updateUsuario.password) {
+        res.status(400).json({
+            error: "Faltan datos requeridos"
+        })
     }
     if (!updateUsuario) {
         res.status(400).json({
