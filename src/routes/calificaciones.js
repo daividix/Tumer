@@ -2,7 +2,7 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const Calificacion = require('../schemas/calificaciones').Calificacion
 const Restaurante = require('../schemas/restaurantes').Restaurante
-mongoose.connect('mongodb://localhost/tumer')
+
 
 router.get("/calificacion-usuario/:id", (req,res,next) =>{
     Calificacion.findOne({usuario_id: req.params.id}, (err, calificacion)=>{

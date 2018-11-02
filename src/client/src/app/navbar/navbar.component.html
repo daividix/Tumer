@@ -1,21 +1,16 @@
-
-    <nav style="background-color: white" class="navbar navbar-light navbar-expand-lg pb-5 pt-3">
-      <div class="container">
-          <a class="navbar-brand" href="#">
-              <img src="assets/images/Captura.JPG"><span style="font-size: 15px" class="font-weight-bold">diseño grafico</span> 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                <a href="#" class="nav-item nav-link active pl-3"><span class="border-bottom border-primary font-weight-bold text-primary">inicio</span><span class="sr-only">(current)</span></a>
-                <a href="#" class="nav-item nav-link pl-3"><span class="border-bottom border-dark font-weight-bold">sobre mi</span></a>
-                <a href="#" class="nav-item nav-link pl-3"><span class="border-bottom border-dark font-weight-bold">proyectos</span></a>
-                <a href="#" class="nav-item nav-link pl-3 disable"><span class="border-bottom border-dark font-weight-bold">contacto</span></a>
-              </div>
-            </div>
-      </div>
-
-    </nav>
-
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-button>
+        <mat-icon class="example-icon">room_service</mat-icon>
+        <span><b>Tumer</b></span>
+    </button>
+    <button mat-button>
+      <span>Inicio</span>
+    </button>
+    <button mat-button>
+        <span>Mejor Rank</span>
+      </button>
+    <span class="example-spacer"></span>
+    <a mat-stroked-button routerLink="." class="example-icon">Iniciar Sesion</a>
+    <a mat-stroked-button routerLink="." class="example-icon" routerLink="/register">Registrarme</a>
+</mat-toolbar-row>

@@ -2,6 +2,7 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const multer = require('multer');
 const fs = require('fs')
+const jwt = require('jsonwebtoken')
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './uploads')
@@ -22,7 +23,7 @@ cloudinary.config({
   
 const Restaurante = require('../schemas/restaurantes').Restaurante
 const Imagen = require("../schemas/imagenes").Imagen
-mongoose.connect('mongodb://localhost/tumer')
+
 
 router.get('/restaurantes/:page', (req,res,next) =>{
     let perpage = 9
@@ -90,7 +91,27 @@ router.get('/restaurantes-categoria/:tipo/:page', (req,res,next)=> {
     })
 });
 
-
+router.use((req,res,next)=>{
+    const token = req.headers['authorization']
+    if (token) {
+        jwt.verify(token, req.app.get('tokenSecret'), (err,decoded)=>{
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: "Authentication failed"
+                })
+            }else{
+                req.decoded = decoded
+                next()
+            }
+        })
+    }else{
+        return res.status(403).json({
+            status: false,
+            message: "not token"
+        })
+    }
+})
 router.post('/restaurante', upload.single('image'), (req,res,next) =>{
     const restaurante = new Restaurante(req.body)
     if (!restaurante.name) {

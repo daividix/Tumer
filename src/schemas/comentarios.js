@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-mongoose.connect('mongodb://localhost/tumer')
-
 const comentario_schema = new Schema({
     restaurante_id: {type: Schema.Types.ObjectId, ref:'Restaurante', required: true},
     usuario_id: {type: Schema.Types.ObjectId, ref:'User', required: true},

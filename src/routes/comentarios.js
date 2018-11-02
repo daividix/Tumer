@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const Comentario = require('../schemas/comentarios').Comentario
-mongoose.connect('mongodb://localhost/tumer')
 
 
 router.get('/comentarios-restaurante/:id/:page', (req,res,next) =>{

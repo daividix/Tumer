@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const Imagen = require('../schemas/imagenes').Imagen
 const multer = require('multer');
 const fs = require('fs')
-mongoose.connect('mongodb://localhost/tumer')
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-mongoose.connect('mongodb://localhost/tumer')
 const restaurante_schema = new Schema({
     name: {type: String, required: true, maxlength: 60, minlength: 4},
     direccion: {type: String, required: true, maxlength: 70, minlength: 10},

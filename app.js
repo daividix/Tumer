@@ -2,6 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors')
+
+const config = require('./src/config/config')
+
+mongoose.connect(config.database)
+mongoose.Promise = global.Promise
+
+app.set('tokenSecret', config.secret)
 
 //routes
 const usuariosRoutes = require('./src/routes/usuarios');
@@ -17,6 +25,7 @@ app.set('port', process.env.PORT || 3000)
 app.engine('html',require('ejs').renderFile)
 
 //middlewares
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 

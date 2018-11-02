@@ -1,18 +1,41 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MaterialModules } from './material.module'
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { BodyComponent } from './body/body.component';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
 
+import { UsuarioService } from './services/usuario.service'
+
+const appRoutes: Routes = [
+  {path:'', redirectTo: 'home', pathMatch: 'full'},
+  {path:'home', component: HomeComponent},
+  {path:'register', component: RegisterComponent}
+]
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    BodyComponent,
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MaterialModules,
+    FormsModule,
+    RouterModule.forRoot(appRoutes),
+    CommonModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
