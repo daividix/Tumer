@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div class="container text-center mt-5">
+  <form class="example-form">
+    <mat-form-field>
+      <input matInput placeholder="Usuario" [(ngModel)]="usuarioLogin.username" name="username">
+    </mat-form-field>
+    <br> 
+    <mat-form-field>
+      <input type="password" matInput placeholder="Contraseña" [(ngModel)]="usuarioLogin.password" name="password">
+    </mat-form-field>
+    <br>
+    <button mat-button (click)="login($event)">Login</button>
+  </form>
+  <br>
+</div>
