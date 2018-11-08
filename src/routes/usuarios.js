@@ -2,129 +2,162 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const User = require('../schemas/usuarios').User
 const jwt = require('jsonwebtoken')
+const passport = require('passport')
 
-
-router.post('/login', (req,res,next)=>{
-    User.findOne({username: req.body.username}, (err,user)=>{
-        if (err) return next(err)
-        
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local-login', (err, user, info) => {
+        if (err) {
+            return res.json({
+                status: false,
+                message: "hubo un error en la busqueda"
+            })
+        }
         if (!user) {
             return res.json({
                 status: false,
-                message: "User not found"
+                message: info.message
             })
-        }else{
-            if (user.validatePassword(req.body.password)) {
-                const token = jwt.sign({user}, req.app.get('tokenSecret'))
+        } else {
+            req.login(user, (err) => {
+                if (err) {
+                    return res.json({
+                        status: false,
+                        message: "Hubo un error al loguearse"
+                    })
+
+                }
                 return res.json({
                     status: true,
-                    message: "User validated",
-                    user,                  
-                    token
+                    message: info.message,
+                    user
                 })
-            }else{
-                
-                return res.json({
-                    status: "wrong password"
-                })
-            }
+            })
+
         }
-    })
+    })(req, res, next)
 })
 
-router.post('/signUp', (req,res,next) =>{
-    const usuario = new User(req.body)
-    usuario.password = usuario.generateHash(usuario.password)
-    if (!usuario.name &&
-        !usuario.username &&
-        !usuario.email &&
-        !usuario.password) {
-        return res.status(400).json({
-            error: "Faltan datos requeridos"
+router.post('/signUp', (req, res, next) => {
+    passport.authenticate('local-signup', (err, user, info) => {
+        if (err) {
+            return res.json({
+                status: false,
+                message: "Hubo un error al agregar el dato",
+                error: err
+            })
+        }
+        if (!user) {
+            return res.json({
+                status: false,
+                message: info.message
+            })
+        } else {
+            return res.json({
+                status: true,
+                message: info.message,
+                user
+            })
+        }
+    })(req, res, next)
+})
+
+router.get('/usuario/:id', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        User.findById(req.params.id, (err, user) => {
+            if (err) return next(err);
+            user.password = undefined
+            res.json({
+                status: true,
+                user
+            });
+        });
+    } else {
+        return res.json({
+            status: false,
+            message: "Not permition"
         })
     }
-     
-    usuario.save((err,usuario)=>{
-        if (err) return res.json({
-            status: false,
-            message: "Error al guardar usuario"
-        });
-        return res.json({
-            status: true,
-            usuario
+
+});
+
+router.delete('/usuario/:id', (req, res, next) => {
+    if (req.isAuthenticated() && req.user.type == 1) {
+        User.remove({
+            _id: req.params.id
+        }, (err, result) => {
+            if (err) return next(err);
+            return res.json({
+                status: true,
+                message: "Se ha eliminado el usuario"
+            })
         })
-    })
+    } else {
+        return res.json({
+            status: false,
+            message: "No autenticado o no es administrador"
+        })
+    }
 })
 
-router.use((req,res,next)=>{
-    const token = req.headers['authorization']
-    if (token) {
-        jwt.verify(token, req.app.get('tokenSecret'), (err,decoded)=>{
-            if (err) {
+router.put('/usuario/:id', (req, res, next) => {
+    if (req.isAuthenticated() && (req.user._id == req.params.id)) {
+        if (!req.body) {
+            return res.status(400).json({
+                status: false,
+                message: "Peticion mal hecha"
+            })
+        }
+        const updateUsuario = req.body
+        if (!updateUsuario.name) {
+            return res.status(400).json({
+                status: false,
+                message: "Faltan datos requeridos"
+            })
+        }
+        if (!updateUsuario.username) {
+            return res.status(400).json({
+                status: false,
+                message: "Faltan datos requeridos"
+            })
+        }
+        if (!updateUsuario.email) {
+            return res.status(400).json({
+                status: false,
+                message: "Faltan datos requeridos"
+            })
+        }
+        if (!updateUsuario.password) {
+            return res.status(400).json({
+                status: false,
+                message: "Faltan datos requeridos"
+            })
+        }
+        
+        User.findByIdAndUpdate(req.params.id, updateUsuario, (err, result) => {
+            if (err){
                 return res.json({
                     status: false,
-                    message: "Authentication failed"
+                    message: "Hubo un error al actualizar los datos del usuario",
+                    error: err
                 })
-            }else{
-                req.decoded = decoded
-                next()
             }
+            return res.json({
+                status: true,
+                message: "Se han actualizado los datos"
+            })
         })
+    }
+
+})
+
+router.get('/logout', (req,res,next)=>{
+    if (req.isAuthenticated()) {
+        return req.logout()
     }else{
-        return res.status(403).json({
+        return res.json({
             status: false,
-            message: "not token"
+            message: "No auntenticado"
         })
     }
 })
-
-router.get('/usuario/:id', (req,res,next) =>{
-    User.findById(req.params.id,(err,usuario) =>{
-        if (err) return next(err);
-        usuario.password = undefined
-        res.json(usuario);
-    });
-});
-
-router.delete('/usuario/:id', (req,res,next) =>{
-    User.remove({_id: req.params.id}, (err,result)=>{
-        if (err) return next(err);
-        res.json(result)
-    });
-});
-
-router.put('/usuario/:id', (req,res,next) =>{
-    const updateUsuario = req.body
-
-    if (!updateUsuario.name) {
-        res.status(400).json({
-            error: "Faltan datos requeridos"
-        })
-    }
-    if (!updateUsuario.username) {
-        res.status(400).json({
-            error: "Faltan datos requeridos"
-        })
-    }
-    if (!updateUsuario.email) {
-        res.status(400).json({
-            error: "Faltan datos requeridos"
-        })
-    }
-    if (!updateUsuario.password) {
-        res.status(400).json({
-            error: "Faltan datos requeridos"
-        })
-    }
-    if (!updateUsuario) {
-        res.status(400).json({
-            error: 'Bad request'
-        })
-    }else{
-        User.findByIdAndUpdate(req.params.id, updateUsuario, (err,result) =>{
-            if (err) return next(err);
-            res.json(result);
-        });
-    }
-});
 module.exports = router;

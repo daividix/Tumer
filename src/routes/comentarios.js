@@ -7,14 +7,27 @@ router.get('/comentarios-restaurante/:id/:page', (req,res,next) =>{
     const perpage = 12
     const page = req.params.page
     Comentario.find({restaurante_id: req.params.id},(err,comentarios) =>{
-        if (err) return next(err);
+        if (err){
+            return res.json({
+                status: false,
+                message: "Hubo un error al buscar los comentarios",
+                error: err
+            })
+        }
     })
     .skip((perpage*page)- perpage)
     .limit(perpage)
     .exec((err, comentarios) =>{
         Comentario.count((err, count) =>{
-            if (err) return next(err);
-            res.json({
+            if (err){
+                return res.json({
+                    status: false,
+                    message: "Hubo un error al hacer el conteo"
+                })
+            }
+            return res.json({
+                status: true,
+                message: "Se cargaron los comentarios correctamente",
                 comentarios,
                 current: page,
                 pages: Math.ceil(count / perpage)
@@ -24,12 +37,29 @@ router.get('/comentarios-restaurante/:id/:page', (req,res,next) =>{
 });
 
 router.get('/comentarios-usuario/:id', (req,res,next) =>{
-
-    Comentario.find({restaurante_id: req.params.id},(err,comentarios) =>{
-        if (err) return next(err);
-        res.json(comentarios);
-    })
-});
+    if (req.isAuthenticated()) {
+        Comentario.find({usuario_id: req.params.id},(err,comentarios) =>{
+            if (err){
+                return res.json({
+                    status: false,
+                    message: "Hubo un error al buscar los comentarios",
+                    error: err
+                })
+            }
+            return res.json({
+                status: true,
+                message: "Comentarios encontrados",
+                comentarios
+            })
+        })
+    }else{
+        return res.json({
+            status: false,
+            message: "No autenticado"
+        })
+    }
+    
+})
 
 router.post('/comentario',(req,res,next) =>{
     const comentario = new Comentario(req.body)

@@ -8,6 +8,7 @@ const calificacion_schema = new Schema({
     cal_limpieza: {type: Number, min: 0, max: 5, required: true},
     cal_servicio: {type: Number, min: 0, max: 5, required: true},
     cal_comida: {type: Number, min: 0, max: 5, required: true},
+    cal_ubic: {type: Number, min: 0, max: 5, required: true}
 })
 
 const Calificacion = mongoose.model("Calificacion", calificacion_schema)

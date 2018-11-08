@@ -3,6 +3,9 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors')
+const session = require('express-session')
+const passport = require('passport')
+const cookieParser = require('cookie-parser')
 
 const config = require('./src/config/config')
 
@@ -28,6 +31,16 @@ app.engine('html',require('ejs').renderFile)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cookieParser())
+app.use(session({
+    secret: 'daividix',
+    resave: true,
+    saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./src/config/passport')(passport)
 
 //Routes
 app.get('/',(req,res)=>{

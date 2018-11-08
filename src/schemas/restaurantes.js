@@ -11,7 +11,8 @@ const restaurante_schema = new Schema({
     calExp: {type: Number, min: 0, max: 5},
     calLimp: {type: Number, min: 0, max: 5},
     calServ: {type: Number, min: 0, max: 5},
-    calComi: {type: Number, min: 0, max: 5}
+    calComi: {type: Number, min: 0, max: 5},
+    calUbic: {type: Number, min: 0, max: 5}
 })
 
 const Restaurante = mongoose.model('Restaurante', restaurante_schema)
