@@ -152,7 +152,11 @@ router.put('/usuario/:id', (req, res, next) => {
 
 router.get('/logout', (req,res,next)=>{
     if (req.isAuthenticated()) {
-        return req.logout()
+        req.logout()
+        return res.json({
+            status: true,
+            message: "Logout"
+        })
     }else{
         return res.json({
             status: false,

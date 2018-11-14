@@ -13,10 +13,14 @@ export class UsuarioService {
   }
 
   agregarUsuario(nuevoUsuario: Usuario) {
-    return this.http.post<any>(`${this.domain}/api/signUp`, nuevoUsuario);
+    return this.http.post<any>(`/api/signUp`, nuevoUsuario);
   }
 
   loginUsuaio(data) {
-    return this.http.post<any>(`${this.domain}/api/login`, data);
+    return this.http.post<any>(`/api/login`, data);
+  }
+
+  logoutUsuario() {
+    return this.http.get<any>(`/api/logout`);
   }
 }

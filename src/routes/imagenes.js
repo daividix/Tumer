@@ -23,7 +23,17 @@ cloudinary.config({
 
 router.get('/imagenes-restaurante/:id', (req,res,next)=>{
     Imagen.find({owner: req.params.id}, (err, imagenes)=>{
-        if (err) return next(err);
+        if (err){
+            return res.json({
+                status: false,
+                message: "Hubo un error al buscar"
+            })
+        }else{
+            return res.json({
+                status: true,
+                imagenes
+            })
+        }
         res.json(imagenes);
     })
 });

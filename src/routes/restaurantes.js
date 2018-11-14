@@ -34,8 +34,14 @@ router.get('/restaurantes/:page', (req, res, next) => {
         .limit(perpage)
         .exec((err, restaurantes) => {
             Restaurante.count((err, count) => {
-                if (err) return next(err);
-                res.json({
+                if (err){
+                    return res.json({
+                        status: false,
+                        message: "Hubo un error al encontrar los restaurantes"
+                    })
+                };
+                return res.json({
+                    status: true,
                     restaurantes,
                     current: page,
                     pages: Math.ceil(count / perpage)
