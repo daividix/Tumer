@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     .subscribe(res => {
       if (res.status === true) {
         console.log(res);
+        localStorage.setItem('usuario', JSON.stringify(res.user));
         this.router.navigate(['/home']);
       } else {
         console.log(res);

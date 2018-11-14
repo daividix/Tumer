@@ -1,16 +1,24 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-button>
-        <mat-icon class="example-icon">room_service</mat-icon>
-        <span><b>Tumer</b></span>
-    </button>
-    <button mat-button>
-      <span>Inicio</span>
-    </button>
-    <button mat-button>
-        <span>Mejor Rank</span>
-      </button>
+    <a mat-button routerLink="/home" class="example-icon">
+      <mat-icon class="example-icon mr-2">room_service</mat-icon>
+      <span><b>Tumer</b></span>
+    </a>
+    <div *ngIf="!logued">
+      <a mat-button routerLink="/home" class="example-icon">Inicio</a>
+      <a mat-button routerLink="/home" class="example-icon">Mejor Rank</a>
+    </div>
+    <div *ngIf="logued && user.type === 1">
+      <a mat-button routerLink="/addRestaurante" class="example-icon">Agregar Restaurante</a>
+      <a mat-button routerLink="/home" class="example-icon">Ver Reportes</a>
+    </div>
     <span class="example-spacer"></span>
-    <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
-    <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
-</mat-toolbar-row>
+    <div *ngIf="!logued">
+      <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
+      <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
+    </div>
+    <a mat-button class="example-icon" *ngIf="logued" (click)="logout()">
+      <mat-icon class="example-icon mr-3">account_circle</mat-icon>
+      <span><b>{{user.name.split(' ')[0]}}</b></span>
+    </a>
+  </mat-toolbar-row>
