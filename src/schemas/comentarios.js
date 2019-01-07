@@ -6,8 +6,8 @@ const comentario_schema = new Schema({
     usuario_id: {type: Schema.Types.ObjectId, ref:'User', required: true},
     contenido: {type: String, maxlength: 1000},
     likes: {type: Number, default: 0},
-    dislikes: {type: Number, default: null},
-    reports: {type: Number, default: null}
+    dislikes: {type: Number, default: 0},
+    reports: {type: Number, default: 0}
 })
 
 const Comentario = mongoose.model('Comentario', comentario_schema)

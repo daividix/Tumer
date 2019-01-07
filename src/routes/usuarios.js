@@ -37,6 +37,22 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
+router.get('/checkUser', (req,res)=>{
+    if (req.isAuthenticated()) {
+        const user = req.user
+        user.password = undefined
+        return res.json({
+            status: true,
+            user
+        })
+    }else{
+        return res.json({
+            status: false,
+            message: 'Not Authenticated'
+        })
+    }
+})
+
 router.post('/signUp', (req, res, next) => {
     passport.authenticate('local-signup', (err, user, info) => {
         if (err) {
@@ -60,6 +76,7 @@ router.post('/signUp', (req, res, next) => {
         }
     })(req, res, next)
 })
+
 
 router.get('/usuario/:id', (req, res, next) => {
     if (req.isAuthenticated()) {
