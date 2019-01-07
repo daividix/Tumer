@@ -1,0 +1,26 @@
+<div style="height: 300px">
+  <mat-card style="height: auto">
+    <mat-card-title>Comments</mat-card-title>
+    <mat-card-content style="height: inherit" class="d-block">
+      <div>
+        <mat-form-field style="width: 100%">
+          <textarea matInput placeholder="Add Comment" [(ngModel)]="comentario"></textarea>
+        </mat-form-field>
+        <div class="d-flex justify-content-end">
+            <button mat-flat-button color="primary" class="mb-2" (click)="agregarComentario()">Comment</button>
+        </div>       
+      </div>
+      <div>
+        <mat-card style="background-color: bisque; margin-bottom: 10px;" *ngFor="let comentario of comentarios">
+          {{comentario.contenido}}
+          <br>
+          <mat-card-footer style="text-align: right">
+            <button mat-icon-button><i class="fas fa-thumbs-up thumb"></i></button>
+            <button mat-icon-button><i class="fas fa-thumbs-down thumb"></i></button>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

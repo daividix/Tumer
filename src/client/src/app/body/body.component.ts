@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Restaurante } from '../models/restaurante';
 import { RestauranteService } from '../services/restaurante.service';
 import { ImagenService } from '../services/imagen.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogCalificarComponent } from '../dialog-calificar/dialog-calificar.component';
 
 @Component({
   selector: 'app-body',
@@ -10,7 +12,13 @@ import { ImagenService } from '../services/imagen.service';
 })
 export class BodyComponent implements OnInit {
   restaurantes: Restaurante[];
-  constructor(private restauranteServices: RestauranteService, private imagenServices: ImagenService) {
+  animal: String;
+  name: String;
+  constructor(
+    private restauranteServices: RestauranteService,
+    private imagenServices: ImagenService,
+    private dialog: MatDialog
+    ) {
     this.restauranteServices.verRestaurantes(1)
       .subscribe(res => {
         if (res.status === false) {
@@ -40,6 +48,16 @@ export class BodyComponent implements OnInit {
             }
           }
         });
+    });
+  }
+
+  dialogCalificar(restaurante) {
+    const dialogRef = this.dialog.open(DialogCalificarComponent, {
+      width: '250px',
+      data: {name: `Calificar ${restaurante.name}`}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('closed dialog');
     });
   }
 

@@ -23,4 +23,7 @@ export class UsuarioService {
   logoutUsuario() {
     return this.http.get<any>(`/api/logout`);
   }
+  checkUsuario() {
+    return this.http.get<any>('/api/checkUser');
+  }
 }

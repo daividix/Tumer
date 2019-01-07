@@ -12,11 +12,14 @@ import { BodyComponent } from './body/body.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AddRestauranteComponent } from './add-restaurante/add-restaurante.component';
+import { CommentsComponent } from './comments/comments.component';
 
 import { UsuarioService } from './services/usuario.service';
 import { ImagenService } from './services/imagen.service';
 import { RestauranteService } from './services/restaurante.service';
-import { AddRestauranteComponent } from './add-restaurante/add-restaurante.component';
+import { ComentariosService } from './services/comentarios.service';
+import { DialogCalificarComponent } from './dialog-calificar/dialog-calificar.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,7 +37,12 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     LoginComponent,
-    AddRestauranteComponent
+    AddRestauranteComponent,
+    CommentsComponent,
+    DialogCalificarComponent
+  ],
+  entryComponents: [
+    DialogCalificarComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +55,8 @@ const appRoutes: Routes = [
   providers: [
     UsuarioService,
     RestauranteService,
-    ImagenService
+    ImagenService,
+    ComentariosService
   ],
   bootstrap: [AppComponent]
 })

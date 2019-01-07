@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { NgModule } from '@angular/core';
 
@@ -17,7 +18,8 @@ import { NgModule } from '@angular/core';
         MatIconModule,
         MatTabsModule,
         MatCardModule,
-        MatInputModule
+        MatInputModule,
+        MatDialogModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -27,7 +29,8 @@ import { NgModule } from '@angular/core';
         MatIconModule,
         MatTabsModule,
         MatCardModule,
-        MatInputModule
+        MatInputModule,
+        MatDialogModule
     ]
 })
 
