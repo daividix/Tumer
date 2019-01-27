@@ -6,6 +6,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { NgModule } from '@angular/core';
 
@@ -19,7 +20,8 @@ import { NgModule } from '@angular/core';
         MatTabsModule,
         MatCardModule,
         MatInputModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSnackBarModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -30,7 +32,8 @@ import { NgModule } from '@angular/core';
         MatTabsModule,
         MatCardModule,
         MatInputModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSnackBarModule
     ]
 })
 

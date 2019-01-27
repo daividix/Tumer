@@ -1,1 +1,11 @@
-<h1 mat-dialog-title>{{data.name}}</h1>
+<h1 mat-dialog-title>Que te ha parecido {{data.name}}</h1>
+<div mat-dialog-content class="text-center">
+  <p>{{data.pregunta}}</p>
+  <div class="box-cal">
+    <a (click)="onNoClick(5)" class="ion-android-star b1"></a>
+    <a (click)="onNoClick(4)" class="ion-android-star b2"></a>
+    <a (click)="onNoClick(3)" class="ion-android-star b3"></a>
+    <a (click)="onNoClick(2)" class="ion-android-star b4"></a>
+    <a (click)="onNoClick(1)" class="ion-android-star b5"></a>
+  </div>
+</div>

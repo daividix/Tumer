@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Comentario } from '../models/comentario';
 import { ComentariosService } from '../services/comentarios.service';
+import { Usuario } from '../models/usuario';
 
 @Component({
   selector: 'app-comments',
@@ -12,6 +13,7 @@ export class CommentsComponent implements OnInit {
   comentario: String;
   comentarios: Comentario[];
   @Input() restauranteId: String;
+  @Input() user: Usuario;
   constructor(private comentariosService: ComentariosService) {  }
 
   ngOnInit() {
@@ -29,8 +31,11 @@ export class CommentsComponent implements OnInit {
     comentario.restaurante_id = this.restauranteId;
     this.comentariosService.agregarComentario(comentario)
     .subscribe(res => {
+      console.log(res);
       if (res.status) {
-        this.comentarios.push(res.comentario);
+        const newComentario = res.comentario;
+        newComentario.user = this.user;
+        this.comentarios.unshift(newComentario);
         this.comentario = '';
       }
     });

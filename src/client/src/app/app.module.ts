@@ -20,6 +20,7 @@ import { ImagenService } from './services/imagen.service';
 import { RestauranteService } from './services/restaurante.service';
 import { ComentariosService } from './services/comentarios.service';
 import { DialogCalificarComponent } from './dialog-calificar/dialog-calificar.component';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     LoginComponent,
     AddRestauranteComponent,
     CommentsComponent,
-    DialogCalificarComponent
+    DialogCalificarComponent,
+    SnackBarComponent
   ],
   entryComponents: [
     DialogCalificarComponent

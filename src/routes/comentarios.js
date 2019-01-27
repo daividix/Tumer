@@ -2,40 +2,55 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const Comentario = require('../schemas/comentarios').Comentario
 
+router.get('/getcomments', (req, res) => {})
 
-router.get('/comentarios-restaurante/:id/:page', (req, res, next) => {
+router.get('/comentarios-restaurante/:id/:page', (req, res) => {
     const perpage = 12
     const page = req.params.page
-    Comentario.find({
-            restaurante_id: req.params.id
-        }, (err, comentarios) => {
+    Comentario.aggregate([
+        {
+            $match: {restaurante_id: mongoose.Types.ObjectId(req.params.id)}
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'usuario_id',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        {
+            $unwind: '$user'
+        },
+        {
+            $project: {
+                "user.password": 0,
+                "user.email": 0,
+                "user.type": 0,
+                "user.username": 0
+            }
+        }
+    ])
+    .sort({likes: -1,fecha: -1})
+    .skip((perpage * page) - perpage)
+    .limit(perpage)
+    .exec((err, comentarios) => {
+        Comentario.count((err, count) => {
             if (err) {
                 return res.json({
                     status: false,
-                    message: "Hubo un error al buscar los comentarios",
-                    error: err
+                    message: "Hubo un error al hacer el conteo"
                 })
             }
-        })
-        .skip((perpage * page) - perpage)
-        .limit(perpage)
-        .exec((err, comentarios) => {
-            Comentario.count((err, count) => {
-                if (err) {
-                    return res.json({
-                        status: false,
-                        message: "Hubo un error al hacer el conteo"
-                    })
-                }
-                return res.json({
-                    status: true,
-                    message: "Se cargaron los comentarios correctamente",
-                    comentarios,
-                    current: page,
-                    pages: Math.ceil(count / perpage)
-                })
+            return res.json({
+                status: true,
+                message: "Se cargaron los comentarios correctamente",
+                comentarios,
+                current: page,
+                pages: Math.ceil(count / perpage)
             })
         })
+    })
 });
 
 router.get('/comentarios-usuario/:id', (req, res, next) => {
@@ -72,6 +87,7 @@ router.post('/comentario', (req, res, next) => {
         comentario.likes = 0
         comentario.dislikes = 0
         comentario.reports = 0
+        comentario.fecha = new Date()
         if (!comentario.restaurante_id &&
             !comentario.usuario_id) {
             return res.json({
@@ -81,6 +97,7 @@ router.post('/comentario', (req, res, next) => {
         }
         comentario.save((err, comentario) => {
             if (err) return next(err);
+            comentario.user = req.user
             return res.json({
                 status: true,
                 message: 'success',

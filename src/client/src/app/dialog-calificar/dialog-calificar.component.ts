@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Calificacion } from '../models/calificacion';
 
 export interface DialogData {
-  animal: String;
   name: String;
+  pregunta: String;
+  calificacion: Calificacion;
 }
 @Component({
   selector: 'app-dialog-calificar',
@@ -11,7 +13,6 @@ export interface DialogData {
   styleUrls: ['./dialog-calificar.component.css']
 })
 export class DialogCalificarComponent implements OnInit {
-
   constructor(
     private dialogRef: MatDialogRef<DialogCalificarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -20,8 +21,11 @@ export class DialogCalificarComponent implements OnInit {
   ngOnInit() {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onNoClick(cal): void {
+    this.dialogRef.close(cal);
   }
 
+  calificar(calificacion): void {
+    this.dialogRef.close(calificacion);
+  }
 }
