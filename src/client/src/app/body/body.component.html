@@ -1,63 +1,7 @@
 <mat-tab-group *ngFor="let restaurante of restaurantes" style="max-width: 600px; margin-top: 10px">
   <mat-tab label="Informacion" style="width: auto">
     <div>
-      <mat-card style="background-color: none">
-        <mat-card-header>
-          <mat-card-title><span class="display-4">{{restaurante.name}}</span></mat-card-title>
-          <mat-card-subtitle>{{restaurante.eslogan}}</mat-card-subtitle>
-        </mat-card-header>
-        <img src="{{restaurante.imagen}}" alt="Photo of a Shiba Inu" mat-card-image>
-        <mat-card-content>
-          <p>
-            {{restaurante.informacion}}
-          </p>
-          <div class="califications row" style="max-width: 500px">
-            <div class="cal-content col-2 text-center">
-              <div class="cal-value">
-                {{redondeo(restaurante.calComi, 1)}} <i class="ion-android-star"></i>
-              </div>
-              <div class="cal-name">
-                <i class="fas fa-utensils"></i>
-              </div>
-            </div>
-            <div class="cal-content col-2 text-center">
-              <div class="cal-value">
-                {{redondeo(restaurante.calServ, 1)}} <i class="ion-android-star"></i>
-              </div>
-              <div class="cal-name">
-                <i class="fas fa-hands"></i>
-              </div>
-            </div>
-            <div class="cal-content col-2 text-center">
-              <div class="cal-value">
-                {{redondeo(restaurante.calExp, 1)}} <i class="ion-android-star"></i> 
-              </div>
-              <div class="cal-name">
-                <i class="fas fa-feather-alt"></i>
-              </div>
-            </div>
-            <div class="cal-content col-2 text-center">
-              <div class="cal-value">
-                {{redondeo(restaurante.calLimp, 1)}} <i class="ion-android-star"></i>
-              </div>
-              <div class="cal-name">
-                <i class="fas fa-broom"></i>
-              </div>
-            </div>
-            <div class="cal-content col-2 text-center">
-              <div class="cal-value">
-                {{redondeo(restaurante.calUbic, 1)}} <i class="ion-android-star"></i>
-              </div>
-              <div class="cal-name">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-            </div>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="dialogCalificar(restaurante)">Calificar</button>
-        </mat-card-actions>
-      </mat-card>
+      <app-restaurante [restaurante]="restaurante"></app-restaurante>
     </div>
   </mat-tab>
   <mat-tab label="Comentarios" style="width: auto">

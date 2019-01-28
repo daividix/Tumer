@@ -2,8 +2,6 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const Comentario = require('../schemas/comentarios').Comentario
 
-router.get('/getcomments', (req, res) => {})
-
 router.get('/comentarios-restaurante/:id/:page', (req, res) => {
     const perpage = 12
     const page = req.params.page

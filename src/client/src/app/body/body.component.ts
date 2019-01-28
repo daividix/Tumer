@@ -130,12 +130,6 @@ export class BodyComponent implements OnInit {
     });
   }
 
-  redondeo(numero, decimales) {
-      const flotante = parseFloat(numero);
-      const resultado = Math.round(flotante * Math.pow(10, decimales)) / Math.pow(10, decimales);
-      return resultado;
-  }
-
   ngOnInit() {
     this.usuarioServices.checkUsuario()
     .subscribe(res => {

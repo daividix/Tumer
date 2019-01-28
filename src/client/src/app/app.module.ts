@@ -21,6 +21,8 @@ import { RestauranteService } from './services/restaurante.service';
 import { ComentariosService } from './services/comentarios.service';
 import { DialogCalificarComponent } from './dialog-calificar/dialog-calificar.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { CommentComponent } from './comment/comment.component';
+import { RestauranteComponent } from './restaurante/restaurante.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -41,7 +43,9 @@ const appRoutes: Routes = [
     AddRestauranteComponent,
     CommentsComponent,
     DialogCalificarComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    CommentComponent,
+    RestauranteComponent
   ],
   entryComponents: [
     DialogCalificarComponent

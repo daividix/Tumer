@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-header>
+      <div mat-card-avatar><i class="fas fa-user-circle" style="font-size: 30px;"></i></div>
+      <mat-card-title><b>{{comentario.user.name}} {{comentario.user.last_name}}</b></mat-card-title>       
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+          {{comentario.contenido}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-icon-button><i class="fas fa-thumbs-up"></i></button>
+        <button mat-icon-button><i class="fas fa-thumbs-down"></i></button>
+    </mat-card-actions>      
+  </mat-card>

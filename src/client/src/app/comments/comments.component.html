@@ -11,21 +11,9 @@
         </div>       
       </div>
       <div class="row">
-        <mat-card class="col-md-5 col-sm-12 m-2" *ngFor="let comentario of comentarios">
-          <mat-card-header>
-            <div mat-card-avatar><i class="fas fa-user-circle" style="font-size: 30px;"></i></div>
-            <mat-card-title><b>{{comentario.user.name}} {{comentario.user.last_name}}</b></mat-card-title>       
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-                {{comentario.contenido}}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-              <button mat-button><i class="fas fa-thumbs-up"></i></button>
-              <button mat-button><i class="fas fa-thumbs-down"></i></button>
-          </mat-card-actions>      
-        </mat-card>
+        <div class="col-md-12 my-2" *ngFor="let comentario of comentarios">
+          <app-comment [comentario]="comentario"></app-comment>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

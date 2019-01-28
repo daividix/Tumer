@@ -12,4 +12,8 @@ export class CalificacionService {
   calificarRestaurante (calificacion: Calificacion) {
     return this.http.post<any>(`/api/calificacion`, calificacion);
   }
+
+  verCalificacionUsuarioRestaurante(restaurante_id: String) {
+    return this.http.get<any>(`/api/calificacion-usuario/${restaurante_id}`);
+  }
 }

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     .subscribe(res => {
       if (res.status === true) {
         console.log(res);
-        this.router.navigate(['/home']);
+        window.location.assign('/home');
       } else {
         console.log(res);
       }

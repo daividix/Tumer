@@ -54,7 +54,10 @@ router.get('/restaurante-id/:id', (req, res, next) => {
     if (req.isAuthenticated()) {
         Restaurante.findById(req.params.id, (err, restaurante) => {
             if (err) return next(err)
-            return res.json(restaurante)
+            return res.json({
+                status: true,
+                restaurante
+            })
         })
     } else {
         return res.json({
@@ -69,15 +72,20 @@ router.get('/restaurantes-nombre/:nombre/:page', (req, res, next) => {
     let page = req.params.page || 1
     Restaurante.find({
             name: req.params.nombre
-        }, (err, restaurantes) => {
-            if (err) return next(err);
         })
         .skip((perpage * page) - perpage)
         .limit(perpage)
         .exec((err, restaurantes) => {
             Restaurante.count((err, count) => {
-                if (err) return next(err);
-                res.json({
+                if (err) {
+                    return res.json({
+                        status: false,
+                        message: "Ocurrio un error en la consulta",
+                        error: err
+                    })
+                }
+                return res.json({
+                    status: true,
                     restaurantes,
                     current: page,
                     pages: Math.ceil(count / perpage)
@@ -91,15 +99,20 @@ router.get('/restaurantes-categoria/:tipo/:page', (req, res, next) => {
     let page = req.params.page || 1
     Restaurante.find({
             tipo: req.params.tipo
-        }, (err) => {
-            if (err) return next(err);
         })
         .skip((perpage * page) - perpage)
         .limit(perpage)
         .exec((err, restaurantes) => {
             Restaurante.count((err, count) => {
-                if (err) return next(err);
-                res.json({
+                if (err){
+                    return res.json({
+                        status: false,
+                        message: "Ocurrio un error en la consulta",
+                        error: err
+                    })
+                }
+                return res.json({
+                    status: true,
                     restaurantes,
                     current: page,
                     pages: Math.ceil(count / perpage)
@@ -143,7 +156,13 @@ router.post('/restaurante', upload.single('image'), (req, res, next) => {
         }
         cloudinary.uploader.upload(req.file.path, function (result) {
             restaurante.save((err, restaurante) => {
-                if (err) return next(err);
+                if (err) {
+                    return res.json({
+                        status: false,
+                        message: "Hubo un error al almacenar el sitio en la base de datos",
+                        erro: err
+                    })
+                }
                 fs.unlinkSync(req.file.path)
                 const imagen = new Imagen({
                     name: req.file.originalname,
@@ -151,7 +170,13 @@ router.post('/restaurante', upload.single('image'), (req, res, next) => {
                     url: result.secure_url
                 })
                 imagen.save((err, image) => {
-                    if (err) return next(err)
+                    if (err) {
+                        return res.json({
+                            status: false,
+                            message: "Hubo un error al almacenar la imagen en la base de datos",
+                            error: err
+                        })
+                    }
                     return res.json({
                         status: true,
                         restaurante,
@@ -175,8 +200,17 @@ router.delete('/restaurante/:id', (req, res, next) => {
         Restaurante.remove({
             _id: req.params.id
         }, (err, result) => {
-            if (err) return next(err);
-            return res.json(result)
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: "Ocurrio un error en la base de datos",
+                    error: err
+                })
+            }
+            return res.json({
+                status: true,
+                result
+            })
         })
     } else {
         return res.json({

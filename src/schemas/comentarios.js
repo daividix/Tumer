@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const comentario_schema = new Schema({
     restaurante_id: {type: Schema.Types.ObjectId, ref:'Restaurante', required: true},
     usuario_id: {type: Schema.Types.ObjectId, ref:'User', required: true},
-    contenido: {type: String, maxlength: 1000},
+    contenido: {type: String, maxlength: 1000, required: true},
     fecha: {type: Date, required: true},
     likes: {type: Number, default: 0},
     dislikes: {type: Number, default: 0},

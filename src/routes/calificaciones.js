@@ -3,10 +3,10 @@ const Calificacion = require('../schemas/calificaciones').Calificacion
 const Restaurante = require('../schemas/restaurantes').Restaurante
 
 
-router.get("/calificacion-usuario/:id", (req, res, next) => {
+router.get("/calificacion-usuario/:id", (req, res) => {
     if (req.isAuthenticated()) {
         Calificacion.find({
-            usuario_id: req.params.id
+            $and: [{usuario_id: req.user._id}, {restaurante_id: req.params.id}]
         }, (err, calificaciones) => {
             if (err) {
                 return res.json({

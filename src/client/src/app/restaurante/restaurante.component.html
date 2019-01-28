@@ -1,0 +1,60 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title><span class="display-4">{{restaurante.name}}</span></mat-card-title>
+      <mat-card-subtitle>{{restaurante.eslogan}}</mat-card-subtitle>
+    </mat-card-header>
+    <img src="{{restaurante.imagen}}" alt="Photo of a Shiba Inu" mat-card-image>
+    <mat-card-content>
+      <p>
+        {{restaurante.informacion}}
+      </p>
+      <div [ngClass]="{'califications row': true, 'text-success': isCalificado}" style="max-width: 500px">
+        <div class="cal-content col-2 text-center">
+          <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_comida)}}">
+            {{redondeo(restaurante.calComi, 1)}} <i [ngClass]="{'ion-android-star': true}"></i>
+          </div>
+          <div class="cal-name" matTooltip="Comida">
+            <i [ngClass]="{'fas fa-utensils': true}"></i>
+          </div>
+        </div>
+        <div class="cal-content col-2 text-center">
+          <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_servicio)}}">
+            {{redondeo(restaurante.calServ, 1)}} <i class="ion-android-star"></i>
+          </div>
+          <div class="cal-name" matTooltip="Servicio">
+            <i [ngClass]="{'fas fa-hands': true}"></i>
+          </div>
+        </div>
+        <div class="cal-content col-2 text-center">
+          <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_experiencia)}}" >
+            {{redondeo(restaurante.calExp, 1)}} <i class="ion-android-star"></i> 
+          </div>
+          <div class="cal-name" matTooltip="Experiencia">
+            <i [ngClass]="{'fas fa-feather-alt': true}"></i>
+          </div>
+        </div>
+        <div class="cal-content col-2 text-center">
+          <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_limpieza)}}">
+            {{redondeo(restaurante.calLimp, 1)}} <i class="ion-android-star"></i>
+          </div>
+          <div class="cal-name" matTooltip="Limpieza">
+            <i [ngClass]="{'fas fa-broom': true}"></i>
+          </div>
+        </div>
+        <div class="cal-content col-2 text-center">
+          <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_ubic)}}">
+            {{redondeo(restaurante.calUbic, 1)}} <i class="ion-android-star"></i>
+          </div>
+          <div class="cal-name" matTooltip="Ubicacion">
+            <i [ngClass]="{'fas fa-map-marker-alt': true}"></i>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="text-center">
+          <button *ngIf="!isCalificado" mat-raised-button color="primary" (click)="dialogCalificar(restaurante)">Calificar</button>
+      </div>
+      
+    </mat-card-actions>
+  </mat-card>
