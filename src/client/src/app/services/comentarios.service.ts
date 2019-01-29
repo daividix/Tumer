@@ -15,4 +15,8 @@ export class ComentariosService {
   agregarComentario(comentario: Comentario) {
     return this.http.post<any>(`api/comentario`, comentario);
   }
+
+  obtenerComentario(comentario_id: String) {
+    return this.http.get<any>(`api/obtenerComentario/${comentario_id}`);
+  }
 }

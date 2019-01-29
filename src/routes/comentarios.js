@@ -148,4 +148,27 @@ router.put('/comentario/:id', (req, res, next) => {
         });
     }
 });
+
+router.get('/obtenerComentario/:id', (req,res)=>{
+    if (req.isAuthenticated()) {
+        Comentario.findById(req.params.id, (err,comentario)=>{
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'Hubo un error al buscar en la base de datos',
+                    error: err
+                })
+            }
+            return res.json({
+                status: true,
+                comentario
+            })
+        })
+    }else{
+        return res.json({
+            status: false,
+            message: 'No autenticado'
+        })
+    }
+})
 module.exports = router;

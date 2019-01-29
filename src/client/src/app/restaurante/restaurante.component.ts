@@ -21,8 +21,7 @@ export class RestauranteComponent implements OnInit {
   constructor(private authService: AuthenticationService,
     private calificacionService: CalificacionService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private calificacionServices: CalificacionService) {
+    private snackBar: MatSnackBar) {
       if (authService.isAuthenticated()) {
         this.isAuth = true;
       }
@@ -44,6 +43,7 @@ export class RestauranteComponent implements OnInit {
     this.dialog.open(DialogCalificarComponent, {
       width: '400px',
       data: {
+        titleNotLoggued: `Debe estar registrado para calificar ${restaurante.name}`,
         restaurante
       }
     }).afterClosed().subscribe(result => {
@@ -80,7 +80,7 @@ export class RestauranteComponent implements OnInit {
     return resultado;
 }
 
-  tooltipCal(cal) {
+  tooltipCal(cal: any) {
     const isAuthenticated = this.authService.isAuthenticated();
     if (isAuthenticated) {
       if (this.isCalificado) {

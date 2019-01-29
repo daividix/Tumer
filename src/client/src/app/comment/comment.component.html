@@ -9,7 +9,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-icon-button><i class="fas fa-thumbs-up"></i></button>
-        <button mat-icon-button><i class="fas fa-thumbs-down"></i></button>
+        <button mat-icon-button (click)="reaccionar(1)" matBadge="{{reacciones.likes}}" matBadgePosition="before"><i class="fas fa-thumbs-up" [ngClass]="{'text-success': miReaccion.like}"></i></button>
+        <button mat-icon-button (click)="reaccionar(2)" matBadge="{{reacciones.dislikes}}"><i class="fas fa-thumbs-down" [ngClass]="{'text-danger': miReaccion.dislike}"></i></button>
     </mat-card-actions>      
   </mat-card>

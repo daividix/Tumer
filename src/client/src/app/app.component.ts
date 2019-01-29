@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
     .subscribe(res => {
       if (res.status) {
         this.authenticationService.login(res.user);
+      } else {
+        if (this.authenticationService.isAuthenticated()) {
+          this.authenticationService.logOut();
+        }
       }
     });
   }

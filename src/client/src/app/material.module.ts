@@ -9,6 +9,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatBadgeModule} from '@angular/material/badge';
 
 import { NgModule } from '@angular/core';
 
@@ -25,7 +26,8 @@ import { NgModule } from '@angular/core';
         MatDialogModule,
         MatSnackBarModule,
         MatTooltipModule,
-        MatStepperModule
+        MatStepperModule,
+        MatBadgeModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -39,7 +41,8 @@ import { NgModule } from '@angular/core';
         MatDialogModule,
         MatSnackBarModule,
         MatTooltipModule,
-        MatStepperModule
+        MatStepperModule,
+        MatBadgeModule
     ]
 })
 

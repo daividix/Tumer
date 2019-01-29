@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Restaurante } from '../models/restaurante';
 
 export interface DialogData {
+  titleNotLoggued: String;
   restaurante: Restaurante;
 }
 @Component({

@@ -15,11 +15,12 @@ mongoose.Promise = global.Promise
 app.set('tokenSecret', config.secret)
 
 //routes
-const usuariosRoutes = require('./src/routes/usuarios');
-const restaurantesRoutes = require('./src/routes/restaurantes');
-const comentariosRoutes = require('./src/routes/comentarios');
-const calificacionesRoutes = require('./src/routes/calificaciones');
-const imagenesRoutes = require('./src/routes//imagenes');
+const usuariosRoutes = require('./src/routes/usuarios')
+const restaurantesRoutes = require('./src/routes/restaurantes')
+const comentariosRoutes = require('./src/routes/comentarios')
+const calificacionesRoutes = require('./src/routes/calificaciones')
+const imagenesRoutes = require('./src/routes//imagenes')
+const reaccionesRoutes = require('./src/routes/reacciones')
 
 
 //settings
@@ -55,6 +56,7 @@ app.use('/api',restaurantesRoutes)
 app.use('/api',comentariosRoutes)
 app.use('/api',calificacionesRoutes)
 app.use('/api',imagenesRoutes)
+app.use('/api',reaccionesRoutes)
 
 //start server
 app.listen(app.get('port'), ()=>{
