@@ -10,3 +10,17 @@
   color: white;
   text-decoration: none;
 }
+
+@media(min-width: 768px){
+  .drawer2{
+    display: none;
+  }
+  .icon-menu {
+    display: none;
+  }
+}
+@media(max-width: 768px) {
+  .option {
+    display: none;
+  }
+}

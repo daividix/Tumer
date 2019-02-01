@@ -1,27 +1,35 @@
-<app-navbar></app-navbar>
-<div class="container text-center mt-5">
-  <form class="example-form">
-    <mat-form-field>
-      <input matInput placeholder="Nombres" [(ngModel)]="modelUsuario.name" name="name">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="Apellidos" [(ngModel)]="modelUsuario.last_name" name="last_name">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="Usuario" [(ngModel)]="modelUsuario.username" name="username">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="correo" [(ngModel)]="modelUsuario.email" name="email">
-    </mat-form-field>
-    <br>  
-    <mat-form-field>
-      <input type="password" matInput placeholder="Contraseña" [(ngModel)]="modelUsuario.password" name="password">
-    </mat-form-field>
-    <br>
-    <button mat-button (click)="registrarUsuario($event)">Registrarme</button>
-  </form>
-  <br>
-</div>
+<body class="body-register">
+  <div class="register-card col-sm-12 col-md-5">
+    <div class="display-4 mb-1">Registrarse</div>
+    <mat-card>
+      <mat-card-content>
+        <form class="example-form text-center">
+          <mat-form-field class="w-75">
+            <input matInput placeholder="Nombres" [(ngModel)]="modelUsuario.name" name="name">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="w-75">
+            <input matInput placeholder="Apellidos" [(ngModel)]="modelUsuario.last_name" name="last_name">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="w-75">
+            <input matInput placeholder="Usuario" [(ngModel)]="modelUsuario.username" name="username">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="w-75">
+            <input matInput placeholder="correo" [(ngModel)]="modelUsuario.email" name="email">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="w-75">
+            <input type="password" matInput placeholder="Contraseña" [(ngModel)]="modelUsuario.password" name="password">
+          </mat-form-field>
+          <br>
+          <button mat-button (click)="registrarUsuario($event)">Registrarme</button>
+        </form>
+      </mat-card-content>
+      <mat-card-actions class="text-right">
+        <a mat-flat-button routerLink="/login">Ya tengo cuenta</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</body>

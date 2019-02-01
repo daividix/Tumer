@@ -7,7 +7,7 @@ const user_schema = new Schema({
     last_name: {type: String, maxlength: 30, minlength: 4},
     username: {type: String, required: true, unique:true, maxlength: 30, minlength: 4},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true, maxlength: 200, minlength: 8},
+    password: {type: String, required: true, maxlength: 100, minlength: 8},
     type: {type: Number, required: true}
 })
 

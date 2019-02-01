@@ -31,19 +31,7 @@ export class BodyComponent implements OnInit {
     private snackBar: MatSnackBar,
     private usuarioServices: UsuarioService
     ) {
-    this.restauranteServices.verRestaurantes(1)
-      .subscribe(res => {
-        if (res.status === false) {
-          console.log(res.message);
-        } else {
-          for (let i = 0; i < res.restaurantes.length; i++) {
-            this.imagenRestaurante(res.restaurantes[i]._id).then(result => {
-              res.restaurantes[i].imagen = result;
-            });
-          }
-          this.restaurantes = res.restaurantes;
-        }
-      });
+
   }
 
   imagenRestaurante(id) {
@@ -137,6 +125,19 @@ export class BodyComponent implements OnInit {
         this.user = res.user;
       }
     });
+    this.restauranteServices.verRestaurantes(1)
+      .subscribe(res => {
+        if (res.status === false) {
+          console.log(res.message);
+        } else {
+          for (let i = 0; i < res.restaurantes.length; i++) {
+            this.imagenRestaurante(res.restaurantes[i]._id).then(result => {
+              res.restaurantes[i].imagen = result;
+            });
+          }
+          this.restaurantes = res.restaurantes;
+        }
+      });
   }
 
 }

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
   <mat-toolbar-row>
     <a mat-button routerLink="/home" class="example-icon">
       <mat-icon class="example-icon mr-2">room_service</mat-icon>
@@ -22,4 +22,42 @@
       <span><b>{{usuario.name.split(' ')[0]}}</b></span>
     </a>
   </mat-toolbar-row>
-</mat-toolbar>
+</mat-toolbar> -->
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="over" class="drawer2">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="drawer.toggle()" class="icon-menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <a mat-button routerLink="/home" class="example-icon">
+          <mat-icon class="example-icon mr-2">room_service</mat-icon>
+          <span><b>Tumer</b></span>
+        </a>
+        <div *ngIf="!logued" class="option">
+          <a mat-button routerLink="/home" class="example-icon">Inicio</a>
+          <a mat-button routerLink="/home" class="example-icon">Mejor Rank</a>
+        </div>
+        <div *ngIf="logued && usuario.type === 1" class="option">
+          <a mat-button routerLink="/addRestaurante" class="example-icon">Agregar Restaurante</a>
+          <a mat-button routerLink="/home" class="example-icon">Ver Reportes</a>
+        </div>
+        <span class="example-spacer option"></span>
+        <div *ngIf="!logued" class="option">
+          <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
+          <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
+        </div>
+        <a mat-button class="example-icon option" *ngIf="logued" (click)="logout()">
+          <mat-icon class="example-icon mr-3">account_circle</mat-icon>
+          <span><b>{{usuario.name.split(' ')[0]}}</b></span>
+        </a>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <ng-content>
+    </ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

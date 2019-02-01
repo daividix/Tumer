@@ -10,6 +10,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 import { NgModule } from '@angular/core';
 
@@ -27,7 +28,8 @@ import { NgModule } from '@angular/core';
         MatSnackBarModule,
         MatTooltipModule,
         MatStepperModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatSidenavModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -42,7 +44,8 @@ import { NgModule } from '@angular/core';
         MatSnackBarModule,
         MatTooltipModule,
         MatStepperModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatSidenavModule
     ]
 })
 
