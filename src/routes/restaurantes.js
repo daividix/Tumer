@@ -26,13 +26,20 @@ const Imagen = require("../schemas/imagenes").Imagen
 
 
 router.get('/restaurantes/:page', (req, res, next) => {
-    let perpage = 9
-    let page = req.params.page || 1
+    let perpage = 2
+    let page = parseInt(req.params.page) || 1
 
     Restaurante.find({})
         .skip((perpage * page) - perpage)
         .limit(perpage)
         .exec((err, restaurantes) => {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'Ocurrio un error en la base de datos',
+                    error: err
+                })
+            }
             Restaurante.count((err, count) => {
                 if (err){
                     return res.json({
@@ -40,11 +47,14 @@ router.get('/restaurantes/:page', (req, res, next) => {
                         message: "Hubo un error al encontrar los restaurantes"
                     })
                 };
+                let pages = Math.ceil(count/perpage)
+                let nextPage = page<pages ? Number(page+1) : null
                 return res.json({
                     status: true,
                     restaurantes,
                     current: page,
-                    pages: Math.ceil(count / perpage)
+                    pages,
+                    nextPage
                 })
             })
         })
@@ -67,35 +77,8 @@ router.get('/restaurante-id/:id', (req, res, next) => {
     }
 })
 
-router.get('/restaurantes-nombre/:nombre/:page', (req, res, next) => {
-    let perpage = 9
-    let page = req.params.page || 1
-    Restaurante.find({
-            name: req.params.nombre
-        })
-        .skip((perpage * page) - perpage)
-        .limit(perpage)
-        .exec((err, restaurantes) => {
-            Restaurante.count((err, count) => {
-                if (err) {
-                    return res.json({
-                        status: false,
-                        message: "Ocurrio un error en la consulta",
-                        error: err
-                    })
-                }
-                return res.json({
-                    status: true,
-                    restaurantes,
-                    current: page,
-                    pages: Math.ceil(count / perpage)
-                })
-            })
-        })
-});
-
-router.get('/restaurantes-categoria/:tipo/:page', (req, res, next) => {
-    let perpage = 9
+router.get('/restaurantes-categoria/:tipo/:page', (req, res) => {
+    let perpage = 2
     let page = req.params.page || 1
     Restaurante.find({
             tipo: req.params.tipo
@@ -103,7 +86,14 @@ router.get('/restaurantes-categoria/:tipo/:page', (req, res, next) => {
         .skip((perpage * page) - perpage)
         .limit(perpage)
         .exec((err, restaurantes) => {
-            Restaurante.count((err, count) => {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'Hubo un error al consultar la base de datos',
+                    error: err
+                })
+            }
+            Restaurante.count({tipo: req.params.tipo},(err, count) => {
                 if (err){
                     return res.json({
                         status: false,
@@ -111,15 +101,55 @@ router.get('/restaurantes-categoria/:tipo/:page', (req, res, next) => {
                         error: err
                     })
                 }
+                let pages = Math.ceil(count/perpage)
+                let nextPage = page<pages ? page+1 : null
                 return res.json({
                     status: true,
                     restaurantes,
                     current: page,
-                    pages: Math.ceil(count / perpage)
+                    pages,
+                    nextPage
                 })
             })
         })
 });
+
+router.get('/restaurante-nombre/:nombre/:page',(req,res)=>{
+    let perpage = 2
+    let page = req.params.page || 1
+    Restaurante.find({
+        name: req.params.nombre
+    })
+    .skip((perpage*page)-perpage)
+    .limit(perpage)
+    .exec((err,restaurantes)=>{
+        if (err){
+            return res.json({
+                status: false,
+                message: 'Hubo un error al consultar la base de datos',
+                error: err
+            })
+        }
+        Restaurante.count({name: req.params.nombre},(err,count)=>{
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'Ocurrio un error en la base de datos',
+                    error: err
+                })
+            }
+            let pages = Math.ceil(count/perpage)
+            let nextPage = page<pages ? page+1 : null
+            return res.json({
+                status: true,
+                restaurantes,
+                currentPage: page,
+                pages,
+                nextPage
+            })
+        })
+    })
+})
 
 router.post('/restaurante', upload.single('image'), (req, res, next) => {
     if (req.isAuthenticated() && req.user.type == 1) {
@@ -193,6 +223,26 @@ router.post('/restaurante', upload.single('image'), (req, res, next) => {
         })
     }
 
+})
+
+router.post('/search-restaurante', (req,res)=>{
+    Restaurante.find({
+        name: {$regex: new RegExp(req.body.value, 'gi')}
+    })
+    .limit(5)
+    .exec((err,restaurantes)=>{
+        if (err) {
+            return res.json({
+                status: false,
+                message: 'Ocurrio un error en la base de datos',
+                error: err
+            })
+        }
+        return res.json({
+            status: true,
+            restaurantes
+        })
+    })
 })
 
 router.delete('/restaurante/:id', (req, res, next) => {

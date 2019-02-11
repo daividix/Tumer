@@ -11,6 +11,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { NgModule } from '@angular/core';
 
@@ -29,7 +31,9 @@ import { NgModule } from '@angular/core';
         MatTooltipModule,
         MatStepperModule,
         MatBadgeModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatChipsModule,
+        MatMenuModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -45,7 +49,9 @@ import { NgModule } from '@angular/core';
         MatTooltipModule,
         MatStepperModule,
         MatBadgeModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatChipsModule,
+        MatMenuModule
     ]
 })
 

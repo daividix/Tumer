@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const Calificacion = require('../schemas/calificaciones').Calificacion
 const Restaurante = require('../schemas/restaurantes').Restaurante
-
+const mongoose = require('mongoose')
 
 router.get("/calificacion-usuario/:id", (req, res) => {
     if (req.isAuthenticated()) {
@@ -102,9 +102,13 @@ router.post("/calificacion", async (req, res, next) => {
                         })
                     }
                     //buscando el promedio de calificaciones
-                    Calificacion.aggregate([{
+                    Calificacion.aggregate([
+                        {
+                            $match: {restaurante_id: mongoose.Types.ObjectId(req.body.restaurante_id)}
+                        },
+                        {
                         $group: {
-                            _id: req.params.id,
+                            _id: null,
                             cal_comida: {
                                 $avg: "$cal_comida"
                             },

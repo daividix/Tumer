@@ -1,4 +1,4 @@
-<app-navbar>
-    <app-body></app-body>
+<app-navbar (onsearch)="search($event)">
+    <app-body [restaurantes]="restaurantes"></app-body>
 </app-navbar>
 

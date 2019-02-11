@@ -3,25 +3,30 @@
     <div class="display-4 mb-1">Registrarse</div>
     <mat-card>
       <mat-card-content>
-        <form class="example-form text-center">
+        <form class="example-form text-center" [formGroup]="registerForm">
           <mat-form-field class="w-75">
-            <input matInput placeholder="Nombres" [(ngModel)]="modelUsuario.name" name="name">
+            <input matInput placeholder="Nombres" formControlName="name" name="name">
+            <mat-error *ngIf="registerForm.controls['name'].errors != null">{{getErrorMessageName()}}</mat-error>
           </mat-form-field>
           <br>
           <mat-form-field class="w-75">
-            <input matInput placeholder="Apellidos" [(ngModel)]="modelUsuario.last_name" name="last_name">
+            <input matInput placeholder="Apellidos" formControlName="last_name" name="last_name">
+            <mat-error *ngIf="registerForm.controls['last_name'].errors != null">{{getErrorMessageLastName()}}</mat-error>
           </mat-form-field>
           <br>
           <mat-form-field class="w-75">
-            <input matInput placeholder="Usuario" [(ngModel)]="modelUsuario.username" name="username">
+            <input matInput placeholder="Usuario" formControlName="username" name="username">
+            <mat-error *ngIf="registerForm.controls['username'].errors != null">{{getErrorMessageUsername()}}</mat-error>
           </mat-form-field>
           <br>
           <mat-form-field class="w-75">
-            <input matInput placeholder="correo" [(ngModel)]="modelUsuario.email" name="email">
+            <input matInput placeholder="correo" formControlName="email" name="email">
+            <mat-error *ngIf="registerForm.controls['email'].errors != null">{{getErrorMessageEmail()}}</mat-error>
           </mat-form-field>
           <br>
           <mat-form-field class="w-75">
-            <input type="password" matInput placeholder="Contraseña" [(ngModel)]="modelUsuario.password" name="password">
+            <input type="password" matInput placeholder="Contraseña" formControlName="password" name="password">
+            <mat-error *ngIf="registerForm.controls['password'].errors != null">{{getErrorMessagePassword()}}</mat-error>
           </mat-form-field>
           <br>
           <button mat-button (click)="registrarUsuario($event)">Registrarme</button>

@@ -28,33 +28,48 @@
   <mat-drawer #drawer class="example-sidenav" mode="over" class="drawer2">
     <p>Auto-resizing sidenav</p>
   </mat-drawer>
-  <mat-drawer-content>
+  <mat-drawer-content style="overflow: hidden">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-        <button mat-icon-button (click)="drawer.toggle()" class="icon-menu">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <a mat-button routerLink="/home" class="example-icon">
-          <mat-icon class="example-icon mr-2">room_service</mat-icon>
-          <span><b>Tumer</b></span>
-        </a>
-        <div *ngIf="!logued" class="option">
-          <a mat-button routerLink="/home" class="example-icon">Inicio</a>
-          <a mat-button routerLink="/home" class="example-icon">Mejor Rank</a>
+        <div style="width: inherit" class="d-flex">
+          <div>
+            <button mat-icon-button (click)="drawer.toggle()" class="icon-menu">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <a mat-button routerLink="/home" class="example-icon">
+              <mat-icon class="example-icon mr-2">room_service</mat-icon>
+              <span><b>Tumer</b></span>
+            </a>
+          </div>
+          <div>
+            <div *ngIf="!logued" class="option">
+              <a mat-button routerLink="/home" class="example-icon">Inicio</a>
+              <a mat-button routerLink="/home" class="example-icon">Mejor Rank</a>
+            </div>
+            <div *ngIf="logued && usuario.type === 1" class="option">
+              <a mat-button routerLink="/addRestaurante" class="example-icon">Agregar Restaurante</a>
+              <a mat-button routerLink="/home" class="example-icon">Ver Reportes</a>
+            </div>
+          </div>
+          <div (mouseenter)="mostrarInput()" (mouseleave)="mostrarInput()">
+            <form (submit)="search($event)">
+                <input [(ngModel)]="searchContent" name="searchContent" type="text" [ngStyle]="{'width': noSearch ? '0%': '100%', 'transition': '0.5s', 'background': 'none', 'font-size': '15px', 'border': 'none', 'color': 'white'}" placeholder="Buscar nombre">
+                <button type="submit" mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+            </form>
+          </div>
+          <div class="w-100 d-flex flex-row-reverse">
+            <div *ngIf="!logued" class="option" style="direction: ltr">
+              <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
+              <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
+            </div>
+            <a mat-button class="example-icon option" *ngIf="logued" (click)="logout()">
+              <mat-icon class="example-icon mr-3">account_circle</mat-icon>
+              <span><b>{{usuario.name.split(' ')[0]}}</b></span>
+            </a>
+          </div>
         </div>
-        <div *ngIf="logued && usuario.type === 1" class="option">
-          <a mat-button routerLink="/addRestaurante" class="example-icon">Agregar Restaurante</a>
-          <a mat-button routerLink="/home" class="example-icon">Ver Reportes</a>
-        </div>
-        <span class="example-spacer option"></span>
-        <div *ngIf="!logued" class="option">
-          <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
-          <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
-        </div>
-        <a mat-button class="example-icon option" *ngIf="logued" (click)="logout()">
-          <mat-icon class="example-icon mr-3">account_circle</mat-icon>
-          <span><b>{{usuario.name.split(' ')[0]}}</b></span>
-        </a>
       </mat-toolbar-row>
     </mat-toolbar>
     <ng-content>

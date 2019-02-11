@@ -8,7 +8,7 @@
       <p>
         {{restaurante.informacion}}
       </p>
-      <div [ngClass]="{'califications row': true, 'text-success': isCalificado}" style="max-width: 500px">
+      <div *ngIf="restaurante.calComi || restaurante.calExp || restaurante.calLimp || restaurante.calServ || restaurante.calUbic; else nocal" [ngClass]="{'califications row': true, 'text-success': isCalificado}" style="max-width: 500px">
         <div class="cal-content col-2 text-center">
           <div class="cal-value" matTooltip="{{tooltipCal(miCalificacion.cal_comida)}}">
             {{redondeo(restaurante.calComi, 1)}} <i [ngClass]="{'ion-android-star': true}"></i>
@@ -50,6 +50,13 @@
           </div>
         </div>
       </div>
+      <ng-template #nocal>
+        <div>
+          <mat-chip-list>
+              <mat-chip>Nadie ha calificado el sitio aun, se el primero en hacerlo!!</mat-chip>
+          </mat-chip-list>  
+        </div>
+      </ng-template>
     </mat-card-content>
     <mat-card-actions>
       <div class="text-center">

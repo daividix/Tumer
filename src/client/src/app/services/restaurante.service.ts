@@ -9,11 +9,19 @@ export class RestauranteService {
 
   constructor(private http: HttpClient) { }
 
-  verRestaurantes(page: number) {
+  verRestaurantes(page: Number) {
     return this.http.get<any>(`api/restaurantes/${page}`);
   }
 
   agregarRestaurante(restaurante: FormData) {
     return this.http.post<any>(`api/restaurante`, restaurante);
+  }
+
+  verRestaurantePorId(id: String) {
+    return this.http.get<any>(`api/restaurante-id/${id}`);
+  }
+
+  searchRestaurante(value) {
+    return this.http.post<any>(`api/search-restaurante`, {value});
   }
 }

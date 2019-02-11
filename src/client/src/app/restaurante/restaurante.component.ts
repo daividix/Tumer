@@ -5,6 +5,8 @@ import { CalificacionService } from '../services/calificacion.service';
 import { Calificacion } from '../models/calificacion';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogCalificarComponent } from '../dialog-calificar/dialog-calificar.component';
+import { RestauranteService } from '../services/restaurante.service';
+import { ImagenService } from '../services/imagen.service';
 
 @Component({
   selector: 'app-restaurante',
@@ -21,7 +23,9 @@ export class RestauranteComponent implements OnInit {
   constructor(private authService: AuthenticationService,
     private calificacionService: CalificacionService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private restauranteService: RestauranteService,
+    private imagenServices: ImagenService) {
       if (authService.isAuthenticated()) {
         this.isAuth = true;
       }
@@ -47,7 +51,7 @@ export class RestauranteComponent implements OnInit {
         restaurante
       }
     }).afterClosed().subscribe(result => {
-      if (result === false) {
+      if (!result) {
         return;
       }
       this.calificacion = new Calificacion();
@@ -61,6 +65,21 @@ export class RestauranteComponent implements OnInit {
       this.calificacionService.calificarRestaurante(this.calificacion)
       .subscribe(res => {
         if (res.status) {
+          this.restauranteService.verRestaurantePorId(this.restaurante._id)
+          .subscribe(resRestaurante => {
+            if (resRestaurante.status) {
+              const newRestaurante: Restaurante = resRestaurante.restaurante;
+              this.imagenServices.verImagen(newRestaurante._id)
+              .subscribe(resImage => {
+                if (resImage.status) {
+                  newRestaurante.imagen = resImage.imagenes[0].url;
+                } else {
+                  newRestaurante.imagen = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+                }
+                this.restaurante = newRestaurante;
+              });
+            }
+          });
           this.snackBar.open('Tu calificacion se agrego correctamente!!', 'Ok', {
             duration: 4000
           });
@@ -80,7 +99,7 @@ export class RestauranteComponent implements OnInit {
     return resultado;
 }
 
-  tooltipCal(cal: any) {
+  tooltipCal(cal) {
     const isAuthenticated = this.authService.isAuthenticated();
     if (isAuthenticated) {
       if (this.isCalificado) {

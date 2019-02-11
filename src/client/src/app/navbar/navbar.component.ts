@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth/authentication.service';
@@ -10,9 +10,11 @@ import { AuthenticationService } from '../services/auth/authentication.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  noSearch: Boolean = true;
   logued: Boolean = false;
   usuario: any;
+  @Output() onsearch = new EventEmitter();
+  searchContent: String;
   constructor(private usuarioServices: UsuarioService, private router: Router,
     private authService: AuthenticationService) {
     this.usuarioServices.checkUsuario()
@@ -43,4 +45,23 @@ export class NavbarComponent implements OnInit {
       });
   }
 
+  search(event) {
+    event.preventDefault();
+    console.log(this.searchContent);
+    if (this.searchContent) {
+      this.onsearch.emit(this.searchContent);
+      this.searchContent = '';
+      this.noSearch = false;
+      return;
+    } else {
+      return;
+    }
+  }
+
+  mostrarInput() {
+    if (this.searchContent) {
+      return;
+    }
+    this.noSearch = !this.noSearch;
+  }
 }
