@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   noSearch: Boolean = true;
   logued: Boolean = false;
   usuario: any;
+  @Input() activedSearch: Boolean;
   @Output() onsearch = new EventEmitter();
   searchContent: String;
   constructor(private usuarioServices: UsuarioService, private router: Router,
@@ -56,6 +57,10 @@ export class NavbarComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  goProfile() {
+    this.router.navigate(['/profile']);
   }
 
   mostrarInput() {

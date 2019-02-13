@@ -225,11 +225,14 @@ router.post('/restaurante', upload.single('image'), (req, res, next) => {
 
 })
 
-router.post('/search-restaurante', (req,res)=>{
+router.post('/search-restaurante/:page', (req,res)=>{
+    let perpage = 2
+    let page = parseInt(req.params.page) || 1
     Restaurante.find({
         name: {$regex: new RegExp(req.body.value, 'gi')}
     })
-    .limit(5)
+    .skip((perpage*page)-perpage)
+    .limit(perpage)
     .exec((err,restaurantes)=>{
         if (err) {
             return res.json({
@@ -238,10 +241,25 @@ router.post('/search-restaurante', (req,res)=>{
                 error: err
             })
         }
-        return res.json({
-            status: true,
-            restaurantes
+        Restaurante.count({name: {$regex: new RegExp(req.body.value, 'gi')}},(err,count)=>{
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'Ocurrio un error en la base de datos',
+                    error: err
+                })
+            }
+            let pages = Math.ceil(count/perpage)
+            let nextPage = page<pages ? page+1 : null
+            return res.json({
+                status: true,
+                restaurantes,
+                currentPage: page,
+                pages,
+                nextPage
+            })
         })
+        
     })
 })
 

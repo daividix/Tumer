@@ -21,7 +21,7 @@ export class RestauranteService {
     return this.http.get<any>(`api/restaurante-id/${id}`);
   }
 
-  searchRestaurante(value) {
-    return this.http.post<any>(`api/search-restaurante`, {value});
+  searchRestaurante(page, value) {
+    return this.http.post<any>(`api/search-restaurante/${page}`, {value});
   }
 }

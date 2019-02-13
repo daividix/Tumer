@@ -1,43 +1,32 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { DialogCalificarComponent } from '../dialog-calificar/dialog-calificar.component';
-
-// models
+import { Component, OnInit, Input } from '@angular/core';
 import { Restaurante } from '../models/restaurante';
 import { Calificacion } from '../models/calificacion';
-
-// services
+import { Usuario } from '../models/usuario';
 import { RestauranteService } from '../services/restaurante.service';
 import { ImagenService } from '../services/imagen.service';
-import { CalificacionService } from '../services/calificacion.service';
-import { Usuario } from '../models/usuario';
 import { UsuarioService } from '../services/usuario.service';
 
-
 @Component({
-  selector: 'app-body',
-  templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css']
+  selector: 'app-body-search',
+  templateUrl: './body-search.component.html',
+  styleUrls: ['./body-search.component.css']
 })
-export class BodyComponent implements OnInit {
+export class BodySearchComponent implements OnInit {
   @Input() restaurantes: Restaurante[];
+  @Input() searchContent: String;
   calificacion = new Calificacion();
   nextPage = 2;
-  activedButton = true;
+  activedButton = false;
   user: Usuario;
-  constructor(
-    private restauranteServices: RestauranteService,
+  constructor(private restauranteServices: RestauranteService,
     private imagenServices: ImagenService,
-    private usuarioServices: UsuarioService
-    ) {
-
-  }
+    private usuarioServices: UsuarioService) { }
 
   ngOnInit() {
   }
 
   getMoreRestaurant() {
-    this.restauranteServices.verRestaurantes(this.nextPage)
+    this.restauranteServices.searchRestaurante(this.searchContent, this.nextPage)
     .subscribe(res => {
       if (res.status) {
         const newRestaurantes: Array<Restaurante> = res.restaurantes;
@@ -58,5 +47,4 @@ export class BodyComponent implements OnInit {
       }
     });
   }
-
 }

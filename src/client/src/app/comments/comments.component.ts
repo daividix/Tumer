@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Comentario } from '../models/comentario';
 import { ComentariosService } from '../services/comentarios.service';
 import { Usuario } from '../models/usuario';
+import { AuthenticationService } from '../services/auth/authentication.service';
 
 @Component({
   selector: 'app-comments',
@@ -13,8 +14,11 @@ export class CommentsComponent implements OnInit {
   comentario: String;
   comentarios: Comentario[];
   @Input() restauranteId: String;
-  @Input() user: Usuario;
-  constructor(private comentariosService: ComentariosService) {  }
+  user: Usuario;
+  constructor(private comentariosService: ComentariosService,
+    private authService: AuthenticationService) {
+    this.user = this.authService.getuser();
+   }
 
   ngOnInit() {
     this.comentariosService.obtenerComentarios(this.restauranteId, 1)
@@ -31,7 +35,6 @@ export class CommentsComponent implements OnInit {
     comentario.restaurante_id = this.restauranteId;
     this.comentariosService.agregarComentario(comentario)
     .subscribe(res => {
-      console.log(res);
       if (res.status) {
         const newComentario = res.comentario;
         newComentario.user = this.user;

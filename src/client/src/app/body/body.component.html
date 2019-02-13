@@ -1,11 +1,11 @@
-<mat-tab-group style="max-width: 600px; margin-top: 10px" *ngFor="let restaurante of restaurantes">
+<mat-tab-group style="max-width: 600px; margin-top: 10px; margin: auto" *ngFor="let restaurante of restaurantes">
   <mat-tab label="Informacion" style="width: auto">
     <div>
       <app-restaurante [restaurante]="restaurante"></app-restaurante>
     </div>
   </mat-tab>
   <mat-tab label="Comentarios" style="width: auto">
-    <app-comments [restauranteId]="restaurante._id" [user]="user"></app-comments>
+    <app-comments [restauranteId]="restaurante._id"></app-comments>
   </mat-tab>
   <mat-tab label="Visitar" style="width: auto">
     <div style="height: 300px">
@@ -15,6 +15,6 @@
     </div>
   </mat-tab>
 </mat-tab-group>
-<div *ngIf="activedButton">
+<div *ngIf="activedButton" class="text-center">
   <button mat-fab color="primary" (click)="getMoreRestaurant()"><mat-icon>add</mat-icon></button>
 </div>

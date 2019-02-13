@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
   user: Usuario;
   constructor(private restauranteServices: RestauranteService,
     private imagenServices: ImagenService,
-    private usuarioServices: UsuarioService) {
+    private usuarioServices: UsuarioService,
+    private router: Router) {
 
       this.usuarioServices.checkUsuario()
     .subscribe(res => {
@@ -36,7 +37,6 @@ export class HomeComponent implements OnInit {
             });
           }
           this.restaurantes = res.restaurantes;
-          console.log(this.restaurantes);
         }
       });
   }
@@ -63,22 +63,6 @@ export class HomeComponent implements OnInit {
   }
 
   search (event) {
-    this.restauranteServices.searchRestaurante(event)
-    .subscribe(res => {
-      console.log(res);
-      if (res.status) {
-        const restaurantes: Restaurante[] = res.restaurantes;
-        restaurantes.forEach(restaurante => {
-          this.imagenServices.verImagen(restaurante._id)
-          .subscribe(resImage => {
-            if (resImage.status) {
-              restaurante.imagen = resImage.imagenes[0].url;
-            }
-          });
-        });
-        this.restaurantes = restaurantes;
-        this.ngOnInit();
-      }
-    });
+    this.router.navigate(['/search', event]);
   }
 }

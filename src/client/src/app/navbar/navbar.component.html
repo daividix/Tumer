@@ -25,7 +25,7 @@
 </mat-toolbar> -->
 
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="over" class="drawer2">
+  <mat-drawer #drawer class="example-sidenav" mode="over" class="drawer2" style="height: 100vh">
     <p>Auto-resizing sidenav</p>
   </mat-drawer>
   <mat-drawer-content style="overflow: hidden">
@@ -51,7 +51,7 @@
               <a mat-button routerLink="/home" class="example-icon">Ver Reportes</a>
             </div>
           </div>
-          <div (mouseenter)="mostrarInput()" (mouseleave)="mostrarInput()">
+          <div *ngIf="activedSearch" (mouseenter)="mostrarInput()" (mouseleave)="mostrarInput()">
             <form (submit)="search($event)">
                 <input [(ngModel)]="searchContent" name="searchContent" type="text" [ngStyle]="{'width': noSearch ? '0%': '100%', 'transition': '0.5s', 'background': 'none', 'font-size': '15px', 'border': 'none', 'color': 'white'}" placeholder="Buscar nombre">
                 <button type="submit" mat-icon-button>
@@ -64,15 +64,19 @@
               <a mat-stroked-button routerLink="/login" class="example-icon">Iniciar Sesion</a>
               <a mat-stroked-button routerLink="/register" class="example-icon">Registrarme</a>
             </div>
-            <a mat-button class="example-icon option" *ngIf="logued" (click)="logout()">
+            <button [matMenuTriggerFor]="navbarMenu" mat-button class="example-icon option" *ngIf="logued">
               <mat-icon class="example-icon mr-3">account_circle</mat-icon>
               <span><b>{{usuario.name.split(' ')[0]}}</b></span>
-            </a>
+            </button>
+            <mat-menu #navbarMenu>
+              <button mat-menu-item routerLink="/profile" (click)="goProfile()">Perfil</button>
+              <button mat-menu-item (click)="logout()">Cerrar sesion</button>
+            </mat-menu>
           </div>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
-    <ng-content>
+    <ng-content class="h-auto">
     </ng-content>
   </mat-drawer-content>
 </mat-drawer-container>

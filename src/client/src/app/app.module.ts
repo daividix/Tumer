@@ -23,6 +23,9 @@ import { DialogCalificarComponent } from './dialog-calificar/dialog-calificar.co
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { CommentComponent } from './comment/comment.component';
 import { RestauranteComponent } from './restaurante/restaurante.component';
+import { SearchComponent } from './search/search.component';
+import { BodySearchComponent } from './body-search/body-search.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -30,7 +33,9 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'navbar', component: NavbarComponent},
-  {path: 'addRestaurante', component: AddRestauranteComponent}
+  {path: 'addRestaurante', component: AddRestauranteComponent},
+  {path: 'search/:content', component: SearchComponent},
+  {path: 'profile', component: ProfileComponent}
   ];
 @NgModule({
   declarations: [
@@ -45,7 +50,10 @@ const appRoutes: Routes = [
     DialogCalificarComponent,
     SnackBarComponent,
     CommentComponent,
-    RestauranteComponent
+    RestauranteComponent,
+    SearchComponent,
+    BodySearchComponent,
+    ProfileComponent
   ],
   entryComponents: [
     DialogCalificarComponent

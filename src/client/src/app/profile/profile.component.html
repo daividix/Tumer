@@ -1,0 +1,8 @@
+<app-navbar [activedSearch]="false">
+  <mat-card *ngIf="isLogin; else templateNoAuth">
+    <mat-card-header>
+      <mat-card-title>{{user.name}}</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <ng-template #templateNoAuth>No autenticado</ng-template>
+</app-navbar>
