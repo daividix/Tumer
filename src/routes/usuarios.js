@@ -124,14 +124,11 @@ router.put('/usuario/:id', (req, res, next) => {
                 message: "Peticion mal hecha"
             })
         }
-        const updateUsuario = req.body
+        const updateUsuario = {}
+        updateUsuario.name = req.body.name
+        updateUsuario.last_name = req.body.last_name
+        updateUsuario.email = req.body.email
         if (!updateUsuario.name) {
-            return res.status(400).json({
-                status: false,
-                message: "Faltan datos requeridos"
-            })
-        }
-        if (!updateUsuario.username) {
             return res.status(400).json({
                 status: false,
                 message: "Faltan datos requeridos"
@@ -143,14 +140,8 @@ router.put('/usuario/:id', (req, res, next) => {
                 message: "Faltan datos requeridos"
             })
         }
-        if (!updateUsuario.password) {
-            return res.status(400).json({
-                status: false,
-                message: "Faltan datos requeridos"
-            })
-        }
         
-        User.findByIdAndUpdate(req.params.id, updateUsuario, (err, result) => {
+        User.findByIdAndUpdate(req.params.id, {$set: updateUsuario}, (err, result) => {
             if (err){
                 return res.json({
                     status: false,

@@ -32,6 +32,7 @@ export class RestauranteComponent implements OnInit {
     }
 
   ngOnInit() {
+    console.log(this.restaurante);
     if (this.authService.isAuthenticated()) {
       this.calificacionService.verCalificacionUsuarioRestaurante(this.restaurante._id)
       .subscribe(res => {

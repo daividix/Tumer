@@ -24,4 +24,8 @@ export class RestauranteService {
   searchRestaurante(page, value) {
     return this.http.post<any>(`api/search-restaurante/${page}`, {value});
   }
+
+  verBestRank(page) {
+    return this.http.get<any>(`/api/restaurantes-bestRank/${page}`);
+  }
 }

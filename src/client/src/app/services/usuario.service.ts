@@ -26,4 +26,8 @@ export class UsuarioService {
   checkUsuario() {
     return this.http.get<any>('/api/checkUser');
   }
+
+  editarUsuario(user_id, newUser) {
+    return this.http.put<any>(`/api/usuario/${user_id}`, newUser);
+  }
 }

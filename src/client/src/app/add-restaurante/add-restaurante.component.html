@@ -1,35 +1,37 @@
-<app-navbar [activedSearch]="false"></app-navbar>
-<div class="container text-center mt-5">
-  <form class="example-form">
-    <mat-form-field>
-      <input matInput placeholder="Nombre" [(ngModel)]="modelRestaurante.name" name="name">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="Direccion" [(ngModel)]="modelRestaurante.direccion" name="direccion">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="Telefono" [(ngModel)]="modelRestaurante.telefono" name="telefono">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input matInput placeholder="Eslogan" [(ngModel)]="modelRestaurante.eslogan" name="eslogan">
-    </mat-form-field>
-    <br>  
-    <mat-form-field>
-      <textarea matInput placeholder="Informacion" [(ngModel)]="modelRestaurante.informacion" name="informacion"></textarea>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <input type="text" matInput placeholder="Tipo" [(ngModel)]="modelRestaurante.tipo" name="tipo">
-    </mat-form-field>
-    <br>
-    <div>
-      <input type="file" placeholder="Imagen" (change)="onFileSelected($event)" name="image">
-    </div>
-    <br>
-    <button mat-button (click)="registrarRestaurante($event)">Registrar</button>
-  </form>
-  <br>
-</div>
+<app-navbar [activedSearch]="false">
+    <div class="container text-center mt-5">
+        <form class="example-form">
+          <mat-form-field>
+            <input matInput placeholder="Nombre" [(ngModel)]="modelRestaurante.name" name="name">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput placeholder="Direccion" [(ngModel)]="modelRestaurante.direccion" name="direccion">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput placeholder="Telefono" [(ngModel)]="modelRestaurante.telefono" name="telefono">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput placeholder="Eslogan" [(ngModel)]="modelRestaurante.eslogan" name="eslogan">
+          </mat-form-field>
+          <br>  
+          <mat-form-field>
+            <textarea matInput placeholder="Informacion" [(ngModel)]="modelRestaurante.informacion" name="informacion"></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Tipo" [(ngModel)]="modelRestaurante.tipo" name="tipo">
+          </mat-form-field>
+          <br>
+          <div>
+            <input type="file" placeholder="Imagen" (change)="onFileSelected($event)" name="image">
+          </div>
+          <br>
+          <button mat-button (click)="registrarRestaurante($event)">Registrar</button>
+        </form>
+        <br>
+      </div>
+</app-navbar>
+

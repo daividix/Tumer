@@ -30,6 +30,11 @@ export class AuthenticationService {
     }
   }
 
+  public saveUser(user) {
+    session.removeItem('usuario');
+    session.setItem('usuario', JSON.stringify(user));
+  }
+
   public logOut() {
     session.clear();
   }

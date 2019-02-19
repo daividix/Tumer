@@ -60,6 +60,52 @@ router.get('/restaurantes/:page', (req, res, next) => {
         })
 });
 
+router.get('/restaurantes-bestRank/:page', (req,res)=>{
+    let perpage = 2
+    let page = parseInt(req.params.page) || 1
+    Restaurante.aggregate([
+        {
+            $match: {}
+        },
+        {
+            $addFields: {
+                totalAvg: {$avg: ["$calComi", "$calServ", "$calExp", "$calLimp","$calUbic"]}
+            }
+        },
+        {
+            $sort: {totalAvg: -1}
+        }
+    ])
+    .skip((perpage * page) - perpage)
+    .limit(perpage)
+    .exec((err, restaurantes) => {
+        if (err) {
+            return res.json({
+                status: false,
+                message: 'Ocurrio un error en la base de datos',
+                error: err
+            })
+        }
+        Restaurante.count((err, count) => {
+            if (err){
+                return res.json({
+                    status: false,
+                    message: "Hubo un error al encontrar los restaurantes"
+                })
+            };
+            let pages = Math.ceil(count/perpage)
+            let nextPage = page<pages ? Number(page+1) : null
+            return res.json({
+                status: true,
+                restaurantes,
+                current: page,
+                pages,
+                nextPage
+            })
+        })
+    })
+})
+
 router.get('/restaurante-id/:id', (req, res, next) => {
     if (req.isAuthenticated()) {
         Restaurante.findById(req.params.id, (err, restaurante) => {

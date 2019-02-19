@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card  [ngStyle]="{'background-color': restaurante.name == 'Beer 24' ? '#cae0f0': restaurante.name == 'Las Vegas' ? '#cae0f0' : ''}">
     <mat-card-header>
       <mat-card-title><span class="display-4">{{restaurante.name}}</span></mat-card-title>
       <mat-card-subtitle>{{restaurante.eslogan}}</mat-card-subtitle>
