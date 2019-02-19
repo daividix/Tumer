@@ -26,6 +26,8 @@ import { RestauranteComponent } from './restaurante/restaurante.component';
 import { SearchComponent } from './search/search.component';
 import { BodySearchComponent } from './body-search/body-search.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BestRankComponent } from './best-rank/best-rank.component';
+import { BodyBestRankComponent } from './body-best-rank/body-best-rank.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
   {path: 'navbar', component: NavbarComponent},
   {path: 'addRestaurante', component: AddRestauranteComponent},
   {path: 'search/:content', component: SearchComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent},
+  {path: 'bestRank', component: BestRankComponent}
   ];
 @NgModule({
   declarations: [
@@ -53,7 +56,9 @@ const appRoutes: Routes = [
     RestauranteComponent,
     SearchComponent,
     BodySearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    BestRankComponent,
+    BodyBestRankComponent
   ],
   entryComponents: [
     DialogCalificarComponent

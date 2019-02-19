@@ -3,7 +3,6 @@ import { UsuarioService } from '../services/usuario.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth/authentication.service';
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,21 +12,20 @@ export class NavbarComponent implements OnInit {
   noSearch: Boolean = true;
   logued: Boolean = false;
   usuario: any;
+  @Input() showFilter: Boolean;
   @Input() activedSearch: Boolean;
   @Output() onsearch = new EventEmitter();
   searchContent: String;
+
   constructor(private usuarioServices: UsuarioService, private router: Router,
     private authService: AuthenticationService) {
-    this.usuarioServices.checkUsuario()
-      .subscribe(res => {
-        if (res.status) {
-          this.usuario = res.user;
-          this.logued = true;
-        }
-      });
   }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.usuario = this.authService.getuser();
+      this.logued = true;
+    }
   }
 
   logout() {
@@ -36,7 +34,7 @@ export class NavbarComponent implements OnInit {
         if (res.status === true) {
           this.authService.logOut();
           this.usuario = {};
-          this.router.navigateByUrl('/navbar', { skipLocationChange: true }).then(() =>
+          this.router.navigateByUrl('/login', { skipLocationChange: true }).then(() =>
             this.router.navigate(['/home']));
           console.log(res.message);
           return;
@@ -69,4 +67,5 @@ export class NavbarComponent implements OnInit {
     }
     this.noSearch = !this.noSearch;
   }
+
 }

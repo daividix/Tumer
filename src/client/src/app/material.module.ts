@@ -13,6 +13,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
+import {MatTreeModule} from '@angular/material/tree';
 
 import { NgModule } from '@angular/core';
 
@@ -33,7 +35,9 @@ import { NgModule } from '@angular/core';
         MatBadgeModule,
         MatSidenavModule,
         MatChipsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatListModule,
+        MatTreeModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -51,7 +55,9 @@ import { NgModule } from '@angular/core';
         MatBadgeModule,
         MatSidenavModule,
         MatChipsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatListModule,
+        MatTreeModule
     ]
 })
 
